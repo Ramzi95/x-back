@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const Subcategory=require("../models/subcategory")
+const { verifyToken } = require('../middleware/verifyToken');
+const { authorizeRoles } = require('../middleware/authorizeRoles');
 
 // afficher la liste des articles.
 router.get('/', async (req, res, )=> {
     try {
-        const subcategories = await Subcategory.find();
+        const subcategories = await Subcategory.find({}, null, { sort: { '_id': -1 } });
                 
         res.status(200).json(subcategories);
     } catch (error) {
@@ -42,7 +44,7 @@ router.get('/:subcategoryId',async(req, res)=>{
 // modifier un article
 
 
-router.put('/:subcategoryId', async (req, res)=> {
+router.put('/:subcategoryId',verifyToken,authorizeRoles("admin"), async (req, res)=> {
    try {
     const art = await Subcategory.findByIdAndUpdate(
         req.params.subcategoryId,
@@ -55,7 +57,7 @@ router.put('/:subcategoryId', async (req, res)=> {
     }
 });
 // Supprimer un article
-router.delete('/:subcategoryId', async (req, res)=> {
+router.delete('/:subcategoryId',verifyToken,authorizeRoles("admin"), async (req, res)=> {
     const  id  = req.params.subcategoryId;
     await Subcategory.findByIdAndDelete(id);
 

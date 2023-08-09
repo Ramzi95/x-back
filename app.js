@@ -2,6 +2,7 @@ const express=require('express');
 const  mongoose =require("mongoose")
 const dotenv =require('dotenv')
 const userRouter =require("./routes/user.route")
+const adminRouter =require("./routes/admin.route")
 const orderRouter =require("./routes/order.route")
 const cartitemRouter =require("./routes/cartitem.route")
 const productRouter =require("./routes/product.route")
@@ -38,6 +39,7 @@ app.use('/api/products', productRouter);
 app.use('/api/categories', categoryRouter);
 app.use('/api/subcategories', subcategoryRouter);
 app.use('/api/notifications', notificationRouter);
+app.use('/api/admins', adminRouter);
 
 app.listen(process.env.PORT, () => {
     connect();

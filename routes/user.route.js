@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const User=require("../models/user")
-
+const { verifyToken } = require('../middleware/verifyToken');
+const { authorizeRoles } = require('../middleware/authorizeRoles');
 // afficher la liste des articles.
 router.get('/', async (req, res, )=> {
     try {
-        const users = await User.find();
+        const users = await User.find({}, null, { sort: { '_id': -1 } });
                 
         res.status(200).json(users);
     } catch (error) {
@@ -55,7 +56,7 @@ router.put('/:userId', async (req, res)=> {
     }
 });
 // Supprimer un article
-router.delete('/:userId', async (req, res)=> {
+router.delete('/:userId',verifyToken,authorizeRoles("admin"), async (req, res)=> {
     const  id  = req.params.userId;
     await User.findByIdAndDelete(id);
 

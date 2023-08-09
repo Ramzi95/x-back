@@ -55,6 +55,7 @@ const productSchema = new mongoose.Schema(
       
       ratingsAverage: {
         type: Number,
+        default:5,
         min: [1, 'Rating must be above or equal 1.0'],
         max: [5, 'Rating must be below or equal 5.0'],
         // set: (val) => Math.round(val * 10) / 10, // 3.3333 * 10 => 33.333 => 33 => 3.3
@@ -71,7 +72,7 @@ const productSchema = new mongoose.Schema(
           user:String,
           rate:Number,
           date:Number,
-          starWidth:Number
+          
         }
       ],
 

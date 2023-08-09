@@ -5,7 +5,7 @@ const Order=require("../models/order")
 // afficher la liste des articles.
 router.get('/', async (req, res, )=> {
     try {
-        const orders = await Order.find();
+        const orders = await Order.find({}, null, { sort: { '_id': -1 } });
                 
         res.status(200).json(orders);
     } catch (error) {

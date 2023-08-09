@@ -5,7 +5,7 @@ const Cartitem=require("../models/cartitem")
 // afficher la liste des articles.
 router.get('/', async (req, res, )=> {
     try {
-        const cartitems = await Cartitem.find();
+        const cartitems = await Cartitem.find({}, null, { sort: { '_id': -1 } });
                 
         res.status(200).json(cartitems);
     } catch (error) {

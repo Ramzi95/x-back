@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const Product=require("../models/product")
-const multer= require('multer')
+const { verifyToken } = require('../middleware/verifyToken');
+const { authorizeRoles } = require('../middleware/authorizeRoles');
 
 // afficher la liste des articles.
-router.get('/', async (req, res, )=> {
+router.get('/',async (req, res, )=> {
     try {
-        const products = await Product.find();
+        const products = await Product.find({}, null, { sort: { '_id': -1 } });
                 
         res.status(200).json(products);
     } catch (error) {
@@ -15,7 +16,7 @@ router.get('/', async (req, res, )=> {
 
 });
 // créer un nouvel article
-router.post('/', async (req, res) =>  {
+router.post('/',verifyToken ,async (req, res) =>  {
     
     const nouvarticle = new Product(req.body)
 
@@ -58,7 +59,7 @@ router.put('/:productId', async (req, res)=> {
 });
 
 // Supprimer un article
-router.delete('/:productId', async (req, res)=> {
+router.delete('/:productId',verifyToken,authorizeRoles("admin"), async (req, res)=> {
     const  id  = req.params.productId;
     await Product.findByIdAndDelete(id);
 
