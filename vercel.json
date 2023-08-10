@@ -6,13 +6,8 @@
     ],
     "routes": [
       { "src": "/(.*)", "dest": "/app.js" }
-    ],
-    "functions": {
-      "api/*": {
-        "memory": 3008,
-        "maxDuration": 10
-      }
-    }
+    ]
+   
   }
 
 
