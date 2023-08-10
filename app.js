@@ -32,6 +32,9 @@ app.use(cors());
 //BodyParser Middleware
 app.use(express.json()); 
 
+app.get("/", (req, res) => {
+    res.send("X-back");
+});
 app.use('/api/users', userRouter);
 app.use('/api/orders', orderRouter);
 app.use('/api/cartitems', cartitemRouter);
