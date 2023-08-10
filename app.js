@@ -13,7 +13,7 @@ const cors=require("cors")
 dotenv.config()
 const app = express();
 
-mongoose.set('strictQuery', true)
+mongoose.set('strictQuery', false)
 const connect = async () => {
     try {
       await mongoose.connect(process.env.DATABASECLOUD);
